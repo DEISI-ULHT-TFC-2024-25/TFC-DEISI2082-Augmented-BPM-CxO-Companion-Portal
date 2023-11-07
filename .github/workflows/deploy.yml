@@ -20,13 +20,10 @@ jobs:
         run: ls -l
 
       - name: Find "back-end" directory
-        run: find . -type d -name "back-end"
-
-      - name: Change directory to "back-end"
-        run: cd ./back-end
-
-      - name: Print current working directory
-        run: pwd  # Print the current working directory
+        run: |
+          find . -type d -name "back-end"
+          cd /home/runner/work/CxOCP/CxOCP/back-end
+          pwd
 
       - name: Debug - List Directory Contents
         run: |
