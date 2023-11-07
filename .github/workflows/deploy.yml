@@ -19,6 +19,9 @@ jobs:
       - name: Change directory to "back-end"
         run: cd back-end
 
+      - name: Print current working directory
+        run: pwd  # Print the current working directory
+
       - name: Debug - List Directory Contents
         run: |
           pwd
