@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  backend:
+    container_name: FastAPI
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+
+  frontend:
+    container_name: React
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+# docker-compose --project-name=CxOCompanionPortal up --detach
