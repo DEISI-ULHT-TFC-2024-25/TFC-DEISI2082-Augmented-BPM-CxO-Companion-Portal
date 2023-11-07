@@ -16,13 +16,13 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Change directory to "back-end"
+        run: cd back-end
+
       - name: Install dependencies
         run:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
-
-      - name: Change directory to "back-end"
-        run: cd back-end
 
       - name: Test with pytest
         run: python -m pytest ./tests
