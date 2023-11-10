@@ -27,19 +27,7 @@ jobs:
       - name: Test with pytest
         run: python -m pytest back-end/tests
 
-  build:
-    runs-on: ubuntu-latest
-    needs: [ test ]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          submodules: 'recursive'
-
-      - name: Build Docker image
-        run: docker build -t ${{ secrets.AZURE_USERNAME }}/back-end-image:latest -f back-end/Dockerfile back-end
-
-  Register:
+  Build:
     runs-on: ubuntu-latest
     needs: [ build ]
     steps:
@@ -50,5 +38,6 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker login ${{ secrets.AZURE_CONTAINERS_SERVER }} -u ${{ secrets.AZURE_USERNAME }} -p ${{ secrets.AZURE_PASSWORD }}
+          docker login ${{ secrets.AZURE_CONTAINERS_SERVER }} -u ${{ secrets.AZURE_USERNAME }} --password-stdin <<< ${{ secrets.AZURE_PASSWORD }}
+          docker build -t ${{ secrets.AZURE_USERNAME }}/back-end-image:latest -f back-end/Dockerfile back-end
           docker push ${{ secrets.AZURE_CONTAINERS_SERVER }}/back-end-image:latest
