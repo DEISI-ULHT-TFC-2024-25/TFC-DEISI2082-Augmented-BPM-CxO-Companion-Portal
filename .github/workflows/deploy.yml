@@ -48,8 +48,14 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build Docker image
+      - name: Build back-end Docker image
         run: docker build -t ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }} -f back-end/Dockerfile back-end
 
-      - name: Push Docker image
+      - name: Push back-end Docker image
         run: docker push ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }}
+
+      - name: Build front-end Docker image
+        run: docker build -t ${{ secrets.CONTAINER_REGISTRY }}/front-end-image:${{ github.sha }} -f front-end/Dockerfile front-end
+
+      - name: Push back-end Docker image
+        run: docker push ${{ secrets.CONTAINER_REGISTRY }}/front-end-image:${{ github.sha }}
