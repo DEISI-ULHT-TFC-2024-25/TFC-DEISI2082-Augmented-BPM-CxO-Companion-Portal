@@ -37,7 +37,8 @@ jobs:
           submodules: 'recursive'
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/back-end-image:latest -f back-end/Dockerfile back-end
+        run: docker build -t ${{ secrets.AZURE_USERNAME }}/back-end-image:latest -f back-end/Dockerfile back-end
+
   Register:
     runs-on: ubuntu-latest
     needs: [ build ]
