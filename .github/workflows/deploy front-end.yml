@@ -48,8 +48,11 @@ jobs:
       - name: Deploy app
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }}/front-end
-          containerAppName: democxocp
+          disableTelemetry: true
+          appSourcePath: ${{ github.workspace }}
           resourceGroup: TFC
-          imageToBuild: ${{ secrets.CONTAINER_REGISTRY }}/front-end-image:${{ github.sha }}
-          dockerfilePath: front-end/Dockerfile
+          containerAppEnvironment: containers-environment
+          containerAppName: back-end
+          imageToDeploy: ${{ secrets.CONTAINER_REGISTRY }}/front-end-image:${{ github.sha }}
+          ingress: external
+          targetPort: 3000

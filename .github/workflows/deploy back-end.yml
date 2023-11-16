@@ -54,3 +54,15 @@ jobs:
 
       - name: Push back-end
         run: docker push ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }}
+
+      - name: Deploy app
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          disableTelemetry: true
+          appSourcePath: ${{ github.workspace }}
+          resourceGroup: TFC
+          containerAppEnvironment: containers-environment
+          containerAppName: back-end
+          imageToDeploy: ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }}
+          ingress: external
+          targetPort: 5000
