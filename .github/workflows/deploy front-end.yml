@@ -1,9 +1,9 @@
-name: CI-CD
+name: CI-CD FE
 
 on:
   push:
-    branches:
-      - master
+    paths:
+      - 'front-end/**'
 
 jobs:
 
@@ -14,18 +14,8 @@ jobs:
         with:
           submodules: 'recursive'
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r back-end/requirements-dev.txt
-
-      - name: Test with pytest
-        run: python -m pytest back-end/tests
+      - name: Test with something
+        run: echo "Learn to test the front-end boy!"
 
   Build:
     runs-on: ubuntu-latest
@@ -47,12 +37,6 @@ jobs:
           login-server: ${{ secrets.CONTAINER_REGISTRY }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-
-      - name: Build back-end
-        run: docker build -t ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }} -f back-end/Dockerfile back-end
-
-      - name: Push back-end
-        run: docker push ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }}
 
       - name: Build front-end
         run: docker build -t ${{ secrets.CONTAINER_REGISTRY }}/front-end-image:${{ github.sha }} -f front-end/Dockerfile front-end

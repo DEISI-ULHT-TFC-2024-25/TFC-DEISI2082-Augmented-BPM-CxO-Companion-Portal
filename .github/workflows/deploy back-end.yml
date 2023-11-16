@@ -1,0 +1,55 @@
+name: CI-CD BE
+
+on:
+  push:
+    paths:
+      - 'back-end/**'
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r back-end/requirements-dev.txt
+
+      - name: Test with pytest
+        run: python -m pytest back-end/tests
+
+  Build:
+    runs-on: ubuntu-latest
+    needs: [ test ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Login Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Docker login
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.CONTAINER_REGISTRY }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build back-end
+        run: docker build -t ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }} -f back-end/Dockerfile back-end
+
+      - name: Push back-end
+        run: docker push ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }}
