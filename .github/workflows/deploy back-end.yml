@@ -1,10 +1,10 @@
 name: CI-CD BE
 
 on:
-  workflow_dispatch:
   push:
     paths:
       - 'back-end/**'
+  workflow_dispatch:
 
 jobs:
 

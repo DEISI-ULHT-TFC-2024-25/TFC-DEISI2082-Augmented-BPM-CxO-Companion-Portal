@@ -1,10 +1,10 @@
 name: CI-CD FE
 
 on:
-  workflow_dispatch:
   push:
     paths:
       - 'front-end/**'
+  workflow_dispatch:
 
 jobs:
 
