@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI-CD
 
 on:
   push:
@@ -36,26 +36,26 @@ jobs:
         with:
           submodules: 'recursive'
 
-      - name: Login via Azure CLI
+      - name: Login Azure CLI
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Docker login
-        uses: azure/docker-login@v1
+        uses: azure/docker-login@v3
         with:
           login-server: ${{ secrets.CONTAINER_REGISTRY }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Build back-end Docker image
+      - name: Build back-end
         run: docker build -t ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }} -f back-end/Dockerfile back-end
 
-      - name: Push back-end Docker image
+      - name: Push back-end
         run: docker push ${{ secrets.CONTAINER_REGISTRY }}/back-end-image:${{ github.sha }}
 
-      - name: Build front-end Docker image
+      - name: Build front-end
         run: docker build -t ${{ secrets.CONTAINER_REGISTRY }}/front-end-image:${{ github.sha }} -f front-end/Dockerfile front-end
 
-      - name: Push back-end Docker image
+      - name: Push front-end
         run: docker push ${{ secrets.CONTAINER_REGISTRY }}/front-end-image:${{ github.sha }}
