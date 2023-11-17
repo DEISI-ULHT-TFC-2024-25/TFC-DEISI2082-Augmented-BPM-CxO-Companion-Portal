@@ -1,4 +1,4 @@
-name: CI-CD FE
+name: CI-CD Front-End
 
 on:
   push:
