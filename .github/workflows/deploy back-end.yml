@@ -1,9 +1,11 @@
-name: CI-CD BE
+name: CI-CD Back-E
 
 on:
   push:
-    paths:
-      - 'back-end/**'
+    branches:
+      [ master ]
+
+  workflow_dispatch:
 
 jobs:
 

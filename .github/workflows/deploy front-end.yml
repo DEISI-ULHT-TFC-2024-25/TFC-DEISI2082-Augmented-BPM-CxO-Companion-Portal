@@ -2,8 +2,10 @@ name: CI-CD FE
 
 on:
   push:
-    paths:
-      - 'front-end/**'
+    branches:
+      [ master ]
+
+  workflow_dispatch:
 
 jobs:
 
