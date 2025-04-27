@@ -21,7 +21,7 @@ git submodule update --init
 **NOTA.:**  Se quisermos garantir que os submodulos estão atualizados até ao último commit dos respetivos repositórios, basta executar:
 
 ```bash
-git submodule update --init --recursive
+git submodule update --init --recursive --remote
 ```
 
 ### Back-End
