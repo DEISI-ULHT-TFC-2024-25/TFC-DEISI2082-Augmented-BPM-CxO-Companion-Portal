@@ -8,12 +8,20 @@ Este README descreve o processo de instalação via Docker da aplicaçãp.
 
 ### Clonar o Repositório
 
-Para começar, é necessário clonar o repositório do projeto e iticializar os submodulos do back-end e front-end:
+Para começar, é necessário clonar o repositório do projeto e inicializar os submodulos do back-end e front-end:
 
 ```bash
 git clone https://github.com/Rocha-a21906962/CxOCP.git
 cd CxOCP
 git submodule update --init
+```
+
+### Updating Submodules
+
+**NOTA.:**  Se quisermos garantir que os submodulos estão atualizados até ao último commit dos respetivos repositórios, basta executar:
+
+```bash
+git submodule update --init --recursive
 ```
 
 ### Back-End
@@ -24,7 +32,7 @@ Para tal é necessário criar um ficheiro (.env):
 ```bash
 cd .\back-end\ 
 ```
-Criamos o ficheiro **.env** e inicializamos o docker do back-end.
+Criamos o ficheiro **.env** e inicializamos o docker do back-end. (um ficheiro foi criado para a 2a entrega do TFC com as minhas secret keys, temporariamente!)
 
 ```bash
 OPENAI_ORG_ID="..."
@@ -36,6 +44,8 @@ COSMOS_DB_KEY="..."
 COSMOS_DB="CxOCP"
 COSMOS_DB_CONTAINER="users"
 COSMOS_DB_CONTAINER2="processes"
+AZURE_STORAGE_CONNECTION_STRING="..."
+AZURE_STORAGE_CONTAINER_NAME ="processes"
 ```
 ```bash
 docker build -t backend-image .
@@ -56,3 +66,4 @@ docker run -d -p 3000:3000 --name frontend frontend-image
 Se não houver nenhum erro, deverás ter os dois dockers a correr e ligados entre si.
 
 **NOTA.:** É necessário garantir não ter outros dockers a correr no porto 5000 e 3000.
+
